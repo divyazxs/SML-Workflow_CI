@@ -15,9 +15,8 @@ y = df['loan_status']
 # Split data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
-# Set Experiment & Autolog
-mlflow.set_experiment("CI_Experiment_Loan_Approval") 
-mlflow.autolog()
+# Set Experiment 
+#mlflow.set_experiment("CI_Experiment_Loan_Approval") 
 
 # Training Model
 with mlflow.start_run():
