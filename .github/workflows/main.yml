@@ -1,0 +1,40 @@
+name: MLflow Training Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Mengambil code dari repo
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Menyiapkan Python
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12.7'
+
+    # Install Library
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mlflow scikit-learn pandas
+
+    # Menjalankan MLflow Project
+    - name: Run MLflow Project
+      run: |
+        cd MLProject
+        mlflow run . --no-conda
+
+    # Simpan Artefak
+    - name: Upload MLflow Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: experiment-results
+        path: MLProject/mlruns
